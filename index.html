@@ -13,18 +13,23 @@
         <h1 class="abuot-heading">To do list</h1>
     </div>
     <div class="container">
-        <div class="todo-list">
+        <form class="todo-list">
             <div class="todo-list__container">
                 <input type="text" required placeholder="What needs to be done?" class="p-normal messege">
             </div>
             <div class="todo-list__btm">
                 <button class="p-normal add-btn" type="submit">Add</button>
             </div>
-        </div>
+        </form>
         <div class="wrapper">
-            <ul class="todo"></ul>
+            <ul class="tasks-list"></ul>
         </div>
     </div>
+    <div class="filters">
+        <span class="active" id="all">All</span>
+        <span id="pending">Pending</span>
+        <span id="completed">Completed</span>
+      </div>
 </body>
 <script src="./script.js"></script>
 <footer>

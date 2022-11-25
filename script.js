@@ -1,47 +1,69 @@
-const addMessege = document.querySelector('.messege');
-const addButten = document.querySelector('.add-btn');
-const todo = document.querySelector('.todo');
+const form =  document.querySelector('.todo-list')
+    addMessege = document.querySelector('.messege'),
+    addButton = document.querySelector('.add-btn'),
+    tasksList = document.querySelector('.tasks-list'),
+    filters = document.querySelector('.filters span');
+    
 
 let todoList = [];
 
-if(localStorage.getItem('todo')){
-    todoList = JSON.parse(localStorage.getItem('todo'));
-    displayMesseges();
-}
 
-addButten.addEventListener('click',function() {
+form.addEventListener('submit', addTask);
+
+tasksList.addEventListener('click', deleteTask)
+tasksList.addEventListener('click', doneTask)
+
+function addTask(e){
+    e.preventDefault();
+
+    const taskText = addMessege.value;
+
     let newTodo = {
-        todo: addMessege.value,
+        text: taskText,
         checked: false,
-        important: false
-
-    };
-
+        important: false,
+        id: todoList.length + 1,
+    }
     todoList.push(newTodo);
-    displayMesseges();
-    localStorage.setItem('todo', JSON.stringify(todoList));
-});
 
-function displayMesseges() {
-    let displayMesseges = ''
-    todoList.forEach(function(item, i){
-        displayMesseges += `
-        <li>
-        <input type='checkbox' id='item_${i}' class='custom-checkbox' ${item.checked ? 'checked' : ''}>
-        <lable class='todo__messege' for='item_${i}'>${item.todo}</lable>
-        <butten class='clouse-btn' id='item_${i}'><img src='./img/close.svg' alt='close'> </butten>
-        </li>
-        `;
-        todo.innerHTML = displayMesseges;
-        console.log(displayMesseges);
-    })
+    const styleCss = newTodo.checked ? 'todo__messege_checked' : '';
+
+    const displayTask = `
+             <li id='${newTodo.id}' class='task'>
+                 <div class='task__continer'>
+                     <lable class='custom-checkbox'  >
+                         <input data-action="done"  type='checkbox' id='${newTodo.id}' ${newTodo.checked && 'checked'} ><p class='task__messeg'>${newTodo.text}</p>
+                     </lable>
+                     <button data-action="delete" class='clouse-btn' id=''><img src='./img/close.svg' alt='close'> </button>
+                 </div>
+             </li>
+             `;
+    tasksList.insertAdjacentHTML('beforeend', displayTask);
+
+    addMessege.value = '';
+    addMessege.focus();
 };
-const cloBut = document.querySelector('.clouse-btn');
-cloBut.addEventListener('click', function(event){
-        todoList.forEach (function(i){
-            todoList.splice(i, 1);
-            displayMesseges();
-        localStorage.setItem('todo', JSON.stringify(todoList));
-        })
 
-});
+function deleteTask(e){
+    if(e.target.dataset.action !== 'delete') return;
+        const parentNode = e.target.closest('.task')
+        const idTask = parentNode.id
+        parentNode.remove()
+
+        const index = todoList.findIndex((todo) => todo.id === idTask);
+        todoList.splice(index, 1)
+
+        // todoList = todoList.filter((todo) => todo.id !== idTask)    
+};
+
+function doneTask(e){
+
+    if(e.target.dataset.action === 'done') return;
+        const parentNode = e.target.closest('.task');
+        const taskTatle = parentNode.querySelector('.task__messeg');
+        taskTatle.classlist.toggle('task__messeg_checked');
+        console.log(e.target)
+        
+    console.log(taskTatle)
+  
+}
