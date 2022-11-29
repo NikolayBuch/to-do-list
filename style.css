@@ -151,6 +151,21 @@ input :hover{
 .clouse-btn img{
     pointer-events: none;
 }
+.tasks__clear{
+    border: none;
+    width: 160px;
+    height: 50px;
+    background: #fff;
+    color: #969696;
+}
+.tasks__clear:hover{
+    color: #1B1F2B;
+    text-decoration: underline;
+}
+.none{
+    display: none;
+}
+
 .filters{
     width: 500px;
     display: flex;
