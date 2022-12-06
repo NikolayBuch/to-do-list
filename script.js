@@ -1,77 +1,67 @@
-const form =  document.querySelector('.todo-list')
-    addMessege = document.querySelector('.messege'),
-    addButton = document.querySelector('.add-btn'),
-    tasksList = document.querySelector('.tasks-list'),
-    filters = document.querySelector('.filters span'),
-    body = document.querySelector('.body');
-    clearChecked = document.querySelector('.tasks__clear')
+const form =  document.querySelector('.todo-list');
+const addMessege = document.querySelector('.messege');
+const addButton = document.querySelector('.add-btn');
+const tasksList = document.querySelector('.tasks-list');
+const filters = document.querySelectorAll('.filters span');
+const body = document.querySelector('.body');
+const clearChecked = document.querySelector('.tasks__clear');
     
 
 let todoList = [];
 
 let activeFilter = 'All'
 
-form.addEventListener('submit', addTask);
-tasksList.addEventListener('click', deleteTask)
-tasksList.addEventListener('click', doneTask)
 
-
-
-
-function addTask(e){
+const addTask = (e) => {
     e.preventDefault();
 
-    const taskText = addMessege.value;
-
     let newTodo = {
-        text: taskText,
+        text: addMessege.value,
         checked: false,
         important: false,
         id: todoList.length + 1,
     }
     todoList.push(newTodo);
 
-    const styleCss = newTodo.checked ? 'task__messege_checked' : 'task__messeg';
-
-    const displayTask = `
-             <li id='${newTodo.id}' class='task'>
-                 <div class='task__continer'>
-                     <lable class='custom-checkbox'  >
-                         <input class='task__checked' data-action="done"  type='checkbox' id='${newTodo.id}' ${newTodo.checked &&'checked'} ><p id=${newTodo.id} class=${styleCss}>${newTodo.text}</p>
-                     </lable>
-                     <button data-action="delete" class='clouse-btn' id=''><img src='./img/close.svg' alt='close'> </button>
-                 </div>
-             </li>
-             `;
-    tasksList.insertAdjacentHTML('beforeend', displayTask);
+    renderTask(todoList)
 
     addMessege.value = '';
     addMessege.focus();
-
-    
-newTodo.checked
-    ? clearChecked.classList.remove('none')
-    : clearChecked.classList.add('none')
-
-    if (newTodo.checked === true) {
-        clearChecked.classList.remove('none')
-    }
-        
 };
 
-function deleteTask(e){
+const renderTask = (list) => {
+
+    const renderItem = list.map((item) =>`
+             <li id='${item.id}' class='task'>
+                 <div class='task__continer'>
+                     <lable class='custom-checkbox'  >
+                         <input class='task__checked' data-action="done"  type='checkbox' id='${item.id}' ${item.checked &&'checked'} ><p id=${item.id} class='${item.checked ? 'task__messeg_checked' : 'task__messeg'}' >${item.text}</p>
+                     </lable>
+                     <button data-action="delete" class='clouse-btn' id=''><img src='./img/close.svg' alt='close'> </button>
+                 </div>
+             </li>`)
+         tasksList.innerHTML = renderItem.join('')
+
+         let checkTask = tasksList.querySelectorAll('.task__checked');
+         if (checkTask.checked) {
+            clearChecked.classList.remove('none')
+         } else {
+            clearChecked.classList.add('none')}
+
+            console.log(checkTask)
+}
+
+const deleteTask = (e) => {
     if(e.target.dataset.action !== 'delete') return;
         const parentNode = e.target.closest('.task')
         const idTask = parentNode.id
         parentNode.remove()
 
         const index = todoList.findIndex((todo) => todo.id === idTask);
-        todoList.splice(index, 1)
-
-        // todoList = todoList.filter((todo) => todo.id !== idTask)    
+        todoList.splice(index, 1)   
 };
 
-function doneTask(e){
+const doneTask = (e) => {
 
     if(e.target.dataset.action !== 'done') return;
         const parentNode = e.target.closest('.task');
@@ -93,38 +83,54 @@ function doneTask(e){
         
   
 };
-const clearBtn = (todoList) =>{
-    if (todoList.checked === true){
-        clearChecked.classList.remove('none')
-    };
-}
-console.log(clearChecked)
 
 const renderFilterItems = (filter) => {
-    switch (filters) {
+    switch (filter) {
         case 'all':
             activeFilter = 'all';
-            render(todoList);
+            renderTask(todoList);
             break;
         case 'completed':
             activeFilter = 'completed';
-            const completedTasks = todoList.filter(todoList => todoList.checked);
-            render(completedTasks);
+            const completedTasks = todoList.filter(newTodo => newTodo.checked);
+            renderTask(completedTasks);
             break;
         case 'pending':
             activeFilter = 'pending';
-            const pendingTasks = todoList.filter(todoList => !todoList.checked);
-            render(pendingTasks);
+            const pendingTasks = todoList.filter(newTodo => !newTodo.checked);
+            renderTask(pendingTasks);
             break;
         default:
-            render(todoList);
+            renderTask(todoList);
     };
 };
 
 filters.forEach((filter) => filter.addEventListener('click', () => {
     document.querySelector("span.active").classList.remove("active");
     filter.classList.add("active");
-    renderFilterItems(filter.id);
+    renderFilterItems()
 }
 ));
 
+// function filterClick(e){
+//    if(e.target.dataset === 'completed'){
+//     const completedTasks = todoList.filter(newTodo => newTodo.checked)
+//     renderTask(completedTasks)
+//    } else if (e.target.dataset === 'pending'){
+//     const pendingTasks = todoList.filter(newTodo => !newTodo.checked)
+//     renderTask (pendingTasks);
+//    } else {
+//     renderTask (todoList)
+//    }
+// }
+
+const clearAllChecked = () => {
+    todoList.forEach((item) => {
+    if (item.checked = true) {
+        clearChecked.remove("none")
+    }
+    })}
+
+addButton.addEventListener('click', addTask);
+tasksList.addEventListener('click', deleteTask)
+tasksList.addEventListener('click', doneTask)
