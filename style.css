@@ -59,7 +59,7 @@ body{
 }
 .messege{
     outline: none;
-    width: 500px;
+    width: 550px;
     height: 40px;
     background: #fff;
     border-color: #fff #fff #bcbaba #fff;
@@ -73,11 +73,19 @@ input :hover{
     background-color: #F9F7F4 #F9F7F4 #000 #F9F7F4;
 }
 .todo-list__btm{
-    width: 500px;
+    width: 550px;
     height: 68px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
+}
+.checked-all{
+    border: none;
+    background: none;
+}
+.checked-all img{
+    width: 20px;
+    height: 20px;
 }
 .add-btn{
     width: 160px;
@@ -102,7 +110,7 @@ input :hover{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 500px;
+    width: 550px;
     height: 24px;
 }
 .custom-checkbox>input{
@@ -153,7 +161,7 @@ input :hover{
 }
 .tasks__clear{
     border: none;
-    width: 160px;
+    width: 130px;
     height: 50px;
     background: #fff;
     color: #969696;
@@ -165,14 +173,25 @@ input :hover{
 .none{
     display: none;
 }
+.filters-blok{
+    width: 550px;
+    display: flex;
+    /* justify-content: center; */
+    color: #969696;
+    align-items: center;
+}
+
+.filters-blok p{
+    width: 150px;
+    padding: 0 25px 0 0;
+}
 
 .filters{
-    width: 500px;
+    width: 200px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    color: #969696;
-    padding: 50px 0 0 0;
+    padding: 0 45px 0 0;
 }
 .filters span.active{
     color: #000;

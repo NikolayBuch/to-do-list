@@ -12,25 +12,33 @@
     <div class="abuot">
         <h1 class="abuot-heading">To do list</h1>
     </div>
-    <div class="container">
-        <form class="todo-list">
-            <div class="todo-list__container">
-                <input type="text" required placeholder="What needs to be done?" class="p-normal messege">
+    <div class="todo__all" data-f="todo"></div>
+        <div class="container">
+            <form class="todo-list">
+                <div class="todo-list__container">
+                    <input type="text" required placeholder="What needs to be done?" class="p-normal messege">
+                </div>
+                <div class="todo-list__btm">
+                    <button class="checked-all"><img src="./img/chack.svg" alt=""></button>
+                    <button class="p-normal add-btn" type="submit">Add</button>
+                </div>
+            </form>
+            <div data-f="todo" class="wrapper">
+                <ul class="tasks-list"></ul>
             </div>
-            <div class="todo-list__btm">
-                <button class="p-normal add-btn" type="submit">Add</button>
+        </div>
+        
+        
+        <div class="filters-blok">
+            <p class="p-normal"> 0 items left</p>
+            <div class="filters">
+                <span class="active" id="all" data-f="all">All</span>
+                <span id="pending" data-f="pending">Pending</span>
+                <span id="completed" data-f="completed">Completed</span>
             </div>
-        </form>
-        <div class="wrapper">
-            <ul class="tasks-list"></ul>
+            <button class="tasks__clear p-normal none">Clear Completed</button>
         </div>
     </div>
-    <button class="tasks__clear p-normal none">Clear Completed</button>
-    <div class="filters">
-        <span class="active" id="all" data-f="all">All</span>
-        <span id="pending" data-f="pending">Pending</span>
-        <span id="completed" data-f="completed">Completed</span>
-      </div>
       
 </body>
 <script src="./script.js"></script>
