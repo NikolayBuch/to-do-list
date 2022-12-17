@@ -148,7 +148,7 @@ input :hover{
     align-items: center;
     
 }
-.task__messeg_checked{
+.checked{
     text-decoration: line-through;
 }
 .clouse-btn{
@@ -181,7 +181,7 @@ input :hover{
     align-items: center;
 }
 
-.filters-blok p{
+.pending{
     width: 150px;
     padding: 0 25px 0 0;
 }
