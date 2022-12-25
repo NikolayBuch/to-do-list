@@ -4,7 +4,9 @@ const tasksList = document.querySelector('.tasks-list');
 const filters = document.querySelectorAll('.filters span');
 const clearChecked = document.querySelector('.tasks__clear');
 const todoAll = document.querySelector('.todo__all');
-const pending = document.querySelector('.pending')
+const pending = document.querySelector('.pending');
+const checkedAll = document.querySelector('.checked-all');
+const body = document.querySelector('.body');
     
 let todoList = [];
 let activeFilter = 'All'
@@ -21,12 +23,16 @@ const addTask = (e) => {
     renderTask(todoList)
     addMessege.value = '';
     addMessege.focus();
-    seveTodoList()    
+    showClearChecked()
+    seveTodoList()
+    showPending()  
+    checkedAllTodo
+    
 };
 
 const renderTask = (list) => {
         const renderItem = list.map((item) =>`
-             <li id='${item.id}' class='task'data-action="li" >
+             <li id='${item.id}' class='task ${item.checked ? 'checkeds ' : ''}' data-action="li" >
                  <div class='task__continer'>
                      <lable class='custom-checkbox'  >
                          <input class='task__checked' onclick="updateStatus(this)" data-action="done"  type='checkbox' id='${item.id}' ${item.checked ? 'checked' : ''}  >
@@ -38,6 +44,43 @@ const renderTask = (list) => {
          tasksList.innerHTML = renderItem.join('')
 };
 
+const checkedAllTodo = () => {
+    let checkedTodo = tasksList.getElementsByTagName('input')
+    const parentNode = tasksList.getElementsByTagName('li')
+    const taskName = tasksList.getElementsByTagName('p')
+    completedTasks = todoList.filter(newTodo => newTodo.checked)
+    for (let i=0; i<checkedTodo.length; i++) {
+        if (completedTasks.length == checkedTodo.length){
+            checkedTodo[i].checked = false;
+            taskName[i].classList.remove('checked')
+            parentNode[i].classList.remove('checkeds')
+            const task = todoList.find((task) => {
+                if(task.id == parentNode[i].id){
+                    return true
+                }
+            })
+            task.checked = !task.checked
+            showPending()
+            clearChecked.classList.remove('none')
+            
+
+        } else if (checkedTodo[i].checked == false){
+            checkedTodo[i].checked = true;
+            taskName[i].classList.add('checked')
+            parentNode[i].classList.add('checkeds')
+            const task = todoList.find((task) => {
+                if(task.id == parentNode[i].id){
+                    return true
+                }
+            })
+            task.checked = !task.checked
+            showPending()
+            }
+        }
+        showClearChecked()
+        seveTodoList()
+}
+
 const deleteTask = (e) => {
     if(e.target.dataset.action !== 'delete') return;
         const parentNode = e.target.closest('.task')
@@ -46,27 +89,34 @@ const deleteTask = (e) => {
 
         const index = todoList.findIndex((todo) => todo.id === idTask);
         const deleteId = todoList.splice(index, 1)   
+        showClearChecked()
         seveTodoList()
+        showPending()
 };
 
 const deleteChecked = (e) => {
     if(e.target.dataset.action !== 'deleteChecked') return;
-    const checkedTask = todoList.filter(newTodo => newTodo.checked)
-    for (checkedTask; checkedTask > 0; checkedTask.remove()){
-        renderTask(checkedTask)
+    const parentNode = tasksList.querySelectorAll('.checkeds')
+    const idTask = Number(parentNode.id)
+    const index = todoList.findIndex((todo) => todo.id === idTask )
+    
+    for (let i=0; i < parentNode.length; i++) {
+        parentNode[i].remove()
+        const deleteId = todoList.splice(index[i], 1)
     }
-    const deleteChecked = todoList.splice(checkedTask, 2)
+     seveTodoList()
+     showClearChecked()
 }
 
 const showPending = () => {
-    const completedTasks = todoList.filter(newTodo => !newTodo.checked)
-    const renderPeding = `<p class="p-normal"> ${completedTasks.length} items left</p>`
+    const pendingTasks = todoList.filter(newTodo => !newTodo.checked)
+    const renderPeding = `<p class="p-normal"> ${pendingTasks.length} items left</p>`
     pending.innerHTML = renderPeding
 }
 
 const showClearChecked = () =>{
-    const checkedTask= todoList.filter(newTodo => newTodo.checked);
-    if (checkedTask == 0) {
+    const completedTasks = todoList.filter(newTodo => newTodo.checked);
+    if (completedTasks == 0) {
         clearChecked.classList.add('none')
     } else {
         clearChecked.classList.remove('none')
@@ -75,10 +125,13 @@ const showClearChecked = () =>{
 
 const updateStatus = (selectedTask) => {
     let taskName = selectedTask.parentNode.lastElementChild;
+    const parentNode = taskName.closest('.task')
     if(selectedTask.checked) {
         taskName.classList.add('checked')
+        parentNode.classList.add('checkeds')
     }else{
         taskName.classList.remove('checked')
+        parentNode.classList.remove('checkeds')
     }
     const task = todoList.find((task) => {
         if(task.id == taskName.id){
@@ -119,6 +172,9 @@ filters.forEach((filter) => filter.addEventListener('click', () => {
 tasksList.addEventListener('click', deleteTask)
 form.addEventListener('submit', addTask);
 clearChecked.addEventListener("click", deleteChecked)
+checkedAll.addEventListener('click', checkedAllTodo)
+// body.addEventListener('click', addTask)/
+
 
 const seveTodoList = () => {
     localStorage.setItem('todoList', JSON.stringify(todoList));
