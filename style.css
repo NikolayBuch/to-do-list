@@ -64,6 +64,9 @@ body{
     margin: 25px 0px 50px 0px;
 }
 @media (max-width:450px){
+    .body{
+        min-width: 300px;
+    }
     .abuot-heading{
     margin: 10px 0 25px 0;
     }
@@ -118,10 +121,10 @@ body{
 }
 @media (max-width:450px){
     .messege {
-        width: 450px;
+        width: 300px;
     }
     .todo-list__btm{
-        width: 450px;
+        width: 300px;
     }
 }
 /* --------Task------- */
@@ -147,7 +150,7 @@ input :hover{
     align-items: center;
     justify-content: space-between;
     width: 550px;
-    height: 24px;
+    height: auto;
 }
 .custom-checkbox>input{
     position: absolute;
@@ -158,7 +161,7 @@ input :hover{
 }
 .custom-checkbox>p{
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     user-select: none;
 }
 .custom-checkbox>p:before {
@@ -181,6 +184,7 @@ input :hover{
 }
 .task__continer p{
     width: 500px;
+    word-break: break-all;
 }
 .todo__messege{
     display: flex;
@@ -229,13 +233,13 @@ opacity: 1;
 
 @media (max-width:450px){
     .task__continer{
-        width: 450px;
+        width: 300px;
     }
     .task__continer p{
-        width: 400px;
+        width: 280px;
     }
     .edit{
-        width: 450px;
+        width: 300px;
     }
 }
 /* ----filte----- */
@@ -268,11 +272,16 @@ opacity: 1;
 }
 @media (max-width:450px){
     .filters-blok{
-        width: 450px;
+        width: 300px;
+        flex-direction: column;
     }
     .pending{
         width: 100px;
         padding: 0 10px 0 0;
+    }
+    .filters{
+        padding: 0;
+        justify-content: space-between;
     }
 }
 /* ------footer---- */
