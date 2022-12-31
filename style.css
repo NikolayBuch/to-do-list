@@ -5,6 +5,7 @@
     font-family: 'Roboto';
     font-style: normal;
 }
+/* ---------text style ----------*/
 h1{
     font-weight: 700;
     font-size: 77px;
@@ -22,6 +23,22 @@ h1{
     line-height: 142%;
     letter-spacing: -0.01em;
 }
+@media (max-width:450px){
+    h1{
+        font-size: 34px;
+        line-height: 112%;
+        letter-spacing: 0.02em;
+    }
+    .p-normal{
+        font-size: 16px;
+        line-height: 142%;
+    }
+    .p-small{
+        font-size: 16px;
+        line-height: 142%;
+    }
+}
+/* ----------body------- */
 body{
     width: 100%;
     height: auto;
@@ -31,6 +48,7 @@ body{
     background: #fff;
     min-width: 800px;
 }
+/* -------------content----------- */
 .abuot{
     width: auto;
     height: auto;
@@ -45,6 +63,12 @@ body{
     text-align: center;
     margin: 25px 0px 50px 0px;
 }
+@media (max-width:450px){
+    .abuot-heading{
+    margin: 10px 0 25px 0;
+    }
+}
+/* -------todo form------------ */
 .todo-list{
     width: auto;
     height: auto;
@@ -65,12 +89,6 @@ body{
     border-color: #fff #fff #bcbaba #fff;
     border-style: solid;
     box-sizing: border-box;
-}
-input ::placeholder{
-    color: #bcbaba;
-}
-input :hover{
-    background-color: #F9F7F4 #F9F7F4 #000 #F9F7F4;
 }
 .todo-list__btm{
     width: 550px;
@@ -94,8 +112,25 @@ input :hover{
     background: #fff;
     color: #969696;
 }
-.button-add:active{
+.add-btn:active{
     background: #000;
+    
+}
+@media (max-width:450px){
+    .messege {
+        width: 450px;
+    }
+    .todo-list__btm{
+        width: 450px;
+    }
+}
+/* --------Task------- */
+
+input ::placeholder{
+    color: #bcbaba;
+}
+input :hover{
+    background-color: #F9F7F4 #F9F7F4 #000 #F9F7F4;
 }
 .wrapper {
     padding: 0 20px;
@@ -106,6 +141,7 @@ input :hover{
     list-style-type: none;
     margin: 20px 0;
 }
+
 .task__continer{
     display: flex;
     align-items: center;
@@ -143,6 +179,9 @@ input :hover{
     background-image: url(./img/chack.svg);
     text-decoration: line-through;
 }
+.task__continer p{
+    width: 500px;
+}
 .todo__messege{
     display: flex;
     align-items: center;
@@ -152,6 +191,7 @@ input :hover{
     text-decoration: line-through;
 }
 .clouse-btn{
+    opacity: 0;
     border: none;
     background: none;
     
@@ -159,33 +199,56 @@ input :hover{
 .clouse-btn img{
     pointer-events: none;
 }
+.task:hover .clouse-btn{
+opacity: 1;
+}
 .tasks__clear{
     border: none;
     width: 130px;
-    height: 50px;
+    height: 22px;
     background: #fff;
     color: #969696;
 }
 .tasks__clear:hover{
     color: #1B1F2B;
     text-decoration: underline;
+    cursor: pointer;
 }
 .none{
     display: none;
 }
+.edit{
+    outline: none;
+    width: 550px;
+    height: 40px;
+    background: #fff;
+    border-color: #fff #fff #bcbaba #fff;
+    border-style: solid;
+    box-sizing: border-box;
+}
+
+@media (max-width:450px){
+    .task__continer{
+        width: 450px;
+    }
+    .task__continer p{
+        width: 400px;
+    }
+    .edit{
+        width: 450px;
+    }
+}
+/* ----filte----- */
 .filters-blok{
     width: 550px;
     display: flex;
-    /* justify-content: center; */
     color: #969696;
     align-items: center;
 }
-
 .pending{
     width: 150px;
     padding: 0 25px 0 0;
 }
-
 .filters{
     width: 200px;
     display: flex;
@@ -193,10 +256,26 @@ input :hover{
     align-items: center;
     padding: 0 45px 0 0;
 }
+.filters span{
+    cursor: pointer;
+}
 .filters span.active{
     color: #000;
     text-decoration: underline;
 }
+.filters span:hover{
+    text-decoration: underline;
+}
+@media (max-width:450px){
+    .filters-blok{
+        width: 450px;
+    }
+    .pending{
+        width: 100px;
+        padding: 0 10px 0 0;
+    }
+}
+/* ------footer---- */
 footer { 
     margin: 50px 0 0 0;
 }

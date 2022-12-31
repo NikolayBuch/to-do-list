@@ -12,10 +12,9 @@ let todoList = [];
 let activeFilter = 'All'
 
 const addTask = (e) => {
-    e.preventDefault();
-    if (addMessege.value == 0) return;
+    if (addMessege.value == '') return;
     let newTodo = {
-        text: addMessege.value,
+        text: addMessege.value.trim(),
         checked: false,
         id: Date.now(),
     }
@@ -25,24 +24,64 @@ const addTask = (e) => {
     addMessege.focus();
     showClearChecked()
     seveTodoList()
-    showPending()  
-    checkedAllTodo
+    showPending()
     
 };
 
 const renderTask = (list) => {
         const renderItem = list.map((item) =>`
              <li id='${item.id}' class='task ${item.checked ? 'checkeds ' : ''}' data-action="li" >
-                 <div class='task__continer'>
+                 <div class='task__continer' >
                      <lable class='custom-checkbox'  >
                          <input class='task__checked' onclick="updateStatus(this)" data-action="done"  type='checkbox' id='${item.id}' ${item.checked ? 'checked' : ''}  >
-                         <p id=${item.id} class=${item.checked ? 'checked ' : ''}>${item.text}</p>
+                         <p ondblclick="thisEdit(this,${item.id}, '${item.text}')" id=${item.id} class='p-normal ${item.checked ? 'checked ' : ''}' >${item.text}</p>
                      </lable>
                      <button data-action="delete" class='clouse-btn' id=''><img src='./img/close.svg' alt='close'> </button>
                  </div>
              </li>`)
          tasksList.innerHTML = renderItem.join('')
 };
+
+const thisEdit = (edit, textId ,textName) => {
+    const parentNode = edit.closest('.task')
+    const boxTask = edit.closest('.task__continer')
+    const lableTask = edit.parentNode
+    const buttonTask = boxTask.lastElementChild
+    const task = todoList.findIndex((task) => task.id == parentNode.id)
+    lableTask.classList.add('none')
+    buttonTask.classList.add('none')
+    const renderInput = `<input type="text" class="p-normal edit">`
+    boxTask.insertAdjacentHTML('beforeend', renderInput)
+    let render = parentNode.querySelector('.edit')
+    render.value = textName
+    render.focus()
+    render.onblur = () => {
+        edit.innerHTML = render.value
+        textName = render.value
+        if (render.value === ''){
+            render.remove()
+            parentNode.remove()
+            const deleteId = todoList.splice(task, 1)  
+        }
+        lableTask.classList.remove('none')
+        buttonTask.classList.remove('none')
+        render.remove()
+        showClearChecked()
+        showPending()
+        seveTodoList()
+    }
+    render.addEventListener('keyup', (e) =>{
+        if (e.key == 'Enter') {
+            render.blur()
+    } else if (e.key === 'Escape') {
+        render.value = textName
+        edit.innerHTML = textName
+        lableTask.classList.remove('none')
+        buttonTask.classList.remove('none')
+        render.blur()
+        render.remove()
+    }})
+}
 
 const checkedAllTodo = () => {
     let checkedTodo = tasksList.getElementsByTagName('input')
@@ -54,25 +93,15 @@ const checkedAllTodo = () => {
             checkedTodo[i].checked = false;
             taskName[i].classList.remove('checked')
             parentNode[i].classList.remove('checkeds')
-            const task = todoList.find((task) => {
-                if(task.id == parentNode[i].id){
-                    return true
-                }
-            })
+            const task = todoList.find((task) => task.id == parentNode[i].id)
             task.checked = !task.checked
             showPending()
             clearChecked.classList.remove('none')
-            
-
         } else if (checkedTodo[i].checked == false){
             checkedTodo[i].checked = true;
             taskName[i].classList.add('checked')
             parentNode[i].classList.add('checkeds')
-            const task = todoList.find((task) => {
-                if(task.id == parentNode[i].id){
-                    return true
-                }
-            })
+            const task = todoList.find((task) => task.id == parentNode[i].id)
             task.checked = !task.checked
             showPending()
             }
@@ -133,11 +162,7 @@ const updateStatus = (selectedTask) => {
         taskName.classList.remove('checked')
         parentNode.classList.remove('checkeds')
     }
-    const task = todoList.find((task) => {
-        if(task.id == taskName.id){
-            return true
-        }
-    })
+    const task = todoList.find((task) => task.id == taskName.id)
     task.checked = !task.checked
     showClearChecked()
     seveTodoList()
@@ -170,10 +195,13 @@ filters.forEach((filter) => filter.addEventListener('click', () => {
 ));
 
 tasksList.addEventListener('click', deleteTask)
-form.addEventListener('submit', addTask);
-clearChecked.addEventListener("click", deleteChecked)
+form.addEventListener('submit', (e) =>{
+    e.preventDefault();
+    addTask()
+});
+clearChecked.addEventListener('click', deleteChecked)
 checkedAll.addEventListener('click', checkedAllTodo)
-// body.addEventListener('click', addTask)/
+body.addEventListener('click', addTask)
 
 
 const seveTodoList = () => {
