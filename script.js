@@ -54,8 +54,9 @@ const thisEdit = (edit, textId ,textName) => {
     boxTask.insertAdjacentHTML('beforeend', renderInput)
     let render = parentNode.querySelector('.edit')
     render.value = textName
+    
     render.focus()
-    render.onblur = () => {
+    render.onblur = (newText) => {
         edit.innerHTML = render.value
         textName = render.value
         if (render.value === ''){
@@ -69,6 +70,7 @@ const thisEdit = (edit, textId ,textName) => {
         showClearChecked()
         showPending()
         seveTodoList()
+        console.log(newText)
     }
     render.addEventListener('keyup', (e) =>{
         if (e.key == 'Enter') {
@@ -82,12 +84,11 @@ const thisEdit = (edit, textId ,textName) => {
         render.remove()
     }})
 }
-
 const checkedAllTodo = () => {
     let checkedTodo = tasksList.getElementsByTagName('input')
     const parentNode = tasksList.getElementsByTagName('li')
     const taskName = tasksList.getElementsByTagName('p')
-    completedTasks = todoList.filter(newTodo => newTodo.checked)
+    const completedTasks = todoList.filter(newTodo => newTodo.checked)
     for (let i=0; i<checkedTodo.length; i++) {
         if (completedTasks.length == checkedTodo.length){
             checkedTodo[i].checked = false;
@@ -125,13 +126,12 @@ const deleteTask = (e) => {
 
 const deleteChecked = (e) => {
     if(e.target.dataset.action !== 'deleteChecked') return;
-    const parentNode = tasksList.querySelectorAll('.checkeds')
-    const idTask = Number(parentNode.id)
-    const index = todoList.findIndex((todo) => todo.id === idTask )
-    
-    for (let i=0; i < parentNode.length; i++) {
-        parentNode[i].remove()
-        const deleteId = todoList.splice(index[i], 1)
+    const completedTasks = todoList.filter(newTodo => newTodo.checked);
+    const taskChecked = tasksList.querySelectorAll('.checkeds')
+    for (let i=0; i < completedTasks.length; i++) {
+        const index = todoList.findIndex((todo) => todo.id == completedTasks[i].id )
+        taskChecked[i].remove()
+        todoList.splice(index, 1)
     }
      seveTodoList()
      showClearChecked()
