@@ -10,6 +10,7 @@ const body = document.querySelector('.body');
 let todoList = [];
 let activeFilter = 'All'
 
+
 const addTask = (e) => {
     if (addMessege.value == '') return;
     let newTodo = {
@@ -20,12 +21,12 @@ const addTask = (e) => {
     todoList.push(newTodo);
     renderTask(todoList)
     addMessege.value = '';
-    addMessege.focus();
     showClearChecked();
     seveTodoList();
     showPending();
     
 };
+
 
 const renderTask = (list) => {
         const renderItem = list.map((item) =>`
@@ -193,10 +194,14 @@ tasksList.addEventListener('click', deleteTask)
 form.addEventListener('submit', (e) =>{
     e.preventDefault();
     addTask();
+    addMessege.focus();
 });
 clearChecked.addEventListener('click', deleteChecked);
 checkedAll.addEventListener('click', checkedAllTodo);
-body.addEventListener('click', addTask);
+body.addEventListener('click', (e) => {
+    if(e.target === addMessege) return;
+    addTask()
+});
 
 
 const seveTodoList = () => {

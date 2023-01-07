@@ -82,16 +82,61 @@ body{
     box-sizing: border-box;
 }
 .todo-list__container{
-    margin: 0 0 50px 0;
+    position: relative;
+    margin-bottom: 20px;
+}
+.label-messege{
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transform: translateY(-50%);
+    color: #bcbaba;
+    transition: 300ms ease;
+    font-size: 16px;
+}
+.messege-text{
+    position: absolute;
+    bottom: 11px;
+    left: 0;
+    transition: all 300ms ease;
 }
 .messege{
+    position: relative;
     outline: none;
     width: 550px;
     height: 40px;
     background: #fff;
-    border-color: #fff #fff #bcbaba #fff;
+    border: inherit;
     border-style: solid;
     box-sizing: border-box;
+    /* transform: scaleX(1); */
+    transition: border-color 300ms ease;
+    border-bottom: 1px #bcbaba solid;
+
+}
+.todo-list__container label::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0; bottom: 0px;
+    border-bottom: 2px solid #000;
+    transition: transform 300ms ease;
+    transform: scaleX(0);
+}
+.todo-list__container input:focus + .label-messege::after{
+    transform: scaleX(1);
+}
+.messege::placeholder{
+    opacity: 0;
+}
+.messege:focus + .label-messege .messege-text{
+    color: #000;
+    bottom: 40px;
+    font-size: 12px;
 }
 .todo-list__btm{
     width: 550px;
@@ -113,11 +158,16 @@ body{
     height: 50px;
     border: 1px solid #000;
     background: #fff;
-    color: #969696;
+    color: #000;
 }
 .add-btn:active{
     background: #000;
-    
+}
+@media (min-width:1025px){
+    .add-btn:hover {
+        background: #000;
+        color: #fff;
+    }
 }
 @media (max-width:450px){
     .messege {
@@ -128,13 +178,6 @@ body{
     }
 }
 /* --------Task------- */
-
-input ::placeholder{
-    color: #bcbaba;
-}
-input :hover{
-    background-color: #F9F7F4 #F9F7F4 #000 #F9F7F4;
-}
 .wrapper {
     padding: 0 20px;
     min-height: 150px;
@@ -194,29 +237,23 @@ input :hover{
 .checked{
     text-decoration: line-through;
 }
+@media (min-width:1025px){
+    .clouse-btn{
+        opacity: 0;
+        
+    }
+    .task:hover .clouse-btn{
+        opacity: 1;
+    }
+}
 .clouse-btn{
-    opacity: 0;
+    opacity: none;
     border: none;
     background: none;
     
 }
 .clouse-btn img{
     pointer-events: none;
-}
-.task:hover .clouse-btn{
-opacity: 1;
-}
-.tasks__clear{
-    border: none;
-    width: 130px;
-    height: 22px;
-    background: #fff;
-    color: #969696;
-}
-.tasks__clear:hover{
-    color: #1B1F2B;
-    text-decoration: underline;
-    cursor: pointer;
 }
 .none{
     display: none;
@@ -226,8 +263,8 @@ opacity: 1;
     width: 550px;
     height: 40px;
     background: #fff;
-    border-color: #fff #fff #bcbaba #fff;
-    border-style: solid;
+    border: inherit;
+    border-bottom: 1px #000 solid;
     box-sizing: border-box;
 }
 
@@ -267,8 +304,25 @@ opacity: 1;
     color: #000;
     text-decoration: underline;
 }
-.filters span:hover{
-    text-decoration: underline;
+.tasks__clear{
+    border: none;
+    width: 130px;
+    height: 22px;
+    background: #fff;
+    color: #969696;
+}
+
+@media (min-width:1025px){
+
+    .filters span:hover{
+        text-decoration: underline;
+    }
+    .tasks__clear:hover{
+        color: #1B1F2B;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
 }
 @media (max-width:450px){
     .filters-blok{
