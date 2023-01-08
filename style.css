@@ -85,7 +85,7 @@ body{
     position: relative;
     margin-bottom: 20px;
 }
-.todo-list__container::before{
+.label-messege::before{
     content: '';
     position: absolute;
     width: 100%;
@@ -108,7 +108,7 @@ body{
     position: absolute;
     bottom: 11px;
     left: 0;
-    transition: transform  300ms ease, font-size 300ms ease;
+    transition: bottom  300ms ease, font-size 300ms ease;
 }
 .messege{
     position: relative;
@@ -119,7 +119,6 @@ body{
     border: none;
     border-style: solid;
     box-sizing: border-box;
-    transition: border-color 300ms ease;
     border: #fff;
 
 }
@@ -128,7 +127,7 @@ body{
     position: absolute;
     width: 100%;
     height: 100%;
-    left: 0; bottom: 0px;
+    left: 0; bottom: -1px;
     border-bottom: 2px solid #000;
     transition: transform 300ms ease;
     transform: scaleX(0);
@@ -141,7 +140,7 @@ body{
 }
 .messege:focus + .label-messege .messege-text{
     color: #000;
-    transform: translateY(-150%);
+    bottom: 35px;
     font-size: 12px;
 }
 .todo-list__btm{
