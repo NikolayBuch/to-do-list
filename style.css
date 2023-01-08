@@ -108,7 +108,7 @@ body{
     position: absolute;
     bottom: 11px;
     left: 0;
-    transition: bottom  100ms ease, font-size 300ms ease, color 300 ease;
+    transition: bottom  200ms ease, font-size 300ms ease;
 }
 .messege{
     position: relative;
