@@ -195,7 +195,7 @@ body{
 
 .task__continer{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     width: 550px;
     height: auto;
@@ -206,6 +206,7 @@ body{
     width: 25px;
     height: 25px;
     z-index: 2;
+    cursor: pointer;
 }
 .custom-checkbox>p{
     display: inline-flex;
@@ -252,9 +253,12 @@ body{
     }
 }
 .clouse-btn{
+    width: 26px;
+    height: 26px;
     opacity: none;
     border: none;
     background: none;
+    cursor: pointer;
     
 }
 .clouse-btn img{
@@ -302,9 +306,7 @@ body{
     align-items: center;
     padding: 0 45px 0 0;
 }
-.filters span{
-    cursor: pointer;
-}
+
 .filters span.active{
     color: #000;
     text-decoration: underline;
@@ -321,6 +323,7 @@ body{
 
     .filters span:hover{
         text-decoration: underline;
+        cursor: pointer;
     }
     .tasks__clear:hover{
         color: #1B1F2B;
@@ -337,10 +340,14 @@ body{
     .pending{
         width: 100px;
         padding: 0 10px 0 0;
+        margin-bottom: 20px;
+
     }
     .filters{
+        width: 300px;
         padding: 0;
         justify-content: space-between;
+        margin-bottom: 20px;
     }
 }
 /* ------footer---- */

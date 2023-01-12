@@ -12,7 +12,7 @@ let activeFilter = 'All'
 
 
 const addTask = (e) => {
-    if (addMessege.value == '') return;
+    if (addMessege.value.trim() === '') return;
     let newTodo = {
         text: addMessege.value.trim(),
         checked: false,
@@ -24,12 +24,10 @@ const addTask = (e) => {
     showClearChecked();
     seveTodoList();
     showPending();
-    
 };
 
-
 const renderTask = (list) => {
-        const renderItem = list.map((item) =>`
+        const renderItem = list.map((item) => `
              <li id='${item.id}' class='task ${item.checked ? 'checkeds ' : ''}' >
                  <div class='task__continer' >
                      <lable class='custom-checkbox'  >
@@ -205,11 +203,17 @@ body.addEventListener('click', (e) => {
 
 
 const seveTodoList = () => {
-    localStorage.setItem('todoList', JSON.stringify(todoList));
+    localStorage.setItem('todoList', JSON.stringify(todoList))
+    renderFilterItems(activeFilter);
 };
 if(localStorage.getItem('todoList')) {
     todoList = JSON.parse(localStorage.getItem('todoList'));
     renderTask(todoList);
-    showClearChecked();
     showPending();
+    renderFilterItems(activeFilter)
+    
 };
+
+
+
+
