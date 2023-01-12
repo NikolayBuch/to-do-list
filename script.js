@@ -177,7 +177,6 @@ renderFilterItems = (filter) => {
         render.forEach(elem => elem.classList.remove('none'))
     } else if (filter == 'completed') {
         activeFilter = 'completed'
-        const completedTasks = todoList.filter(newTodo => newTodo.checked);
         render.forEach((elem) => {
             elem.classList.remove('none')
             if (!elem.classList.contains('checkeds')) {
@@ -186,7 +185,6 @@ renderFilterItems = (filter) => {
         })
     } else if(filter == 'pending') {
         activeFilter = 'pending'
-        const pendingTasks = todoList.filter(newTodo => !newTodo.checked);
         render.forEach((elem) => {
             elem.classList.remove('none')
             if (!elem.classList.contains('pending')) {
