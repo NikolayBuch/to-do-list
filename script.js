@@ -19,26 +19,27 @@ const addTask = (e) => {
         id: Date.now(),
     }
     todoList.push(newTodo);
-    renderTask(todoList)
+    rendersItems(newTodo)
     addMessege.value = '';
     showClearChecked();
     seveTodoList();
     showPending();
 };
 
-const renderTask = (list) => {
-        const renderItem = list.map((item) => `
-             <li id='${item.id}' class='task ${item.checked ? 'checkeds ' : ''}' >
-                 <div class='task__continer' >
-                     <lable class='custom-checkbox'  >
-                         <input class='task__checked' onclick="updateStatus(this)" type='checkbox' id='${item.id}' ${item.checked ? 'checked' : ''}  >
-                         <p ondblclick="edit(this)" id=${item.id} class='p-normal ${item.checked ? 'checked ' : ''}' >${item.text}</p>
-                     </lable>
-                     <button data-action="delete" class='clouse-btn' ><img src='./img/close.svg' alt='close'> </button>
-                 </div>
-             </li>`)
-         tasksList.innerHTML = renderItem.join('')
-};
+const rendersItems = (item) => {
+    const render = `
+                  <li id='${item.id}' class='task ${item.checked ? 'checkeds ' : 'pending'}' >
+                      <div class='task__continer' >
+                          <lable class='custom-checkbox'  >
+                              <input class='task__checked' onclick="updateStatus(this)" type='checkbox' id='${item.id}' ${item.checked ? 'checked' : ''}  >
+                              <p ondblclick="edit(this)" id=${item.id} class='p-normal ${item.checked ? 'checked ' : ''}' >${item.text}</p>
+                          </lable>
+                          <button data-action="delete" class='clouse-btn' ><img src='./img/close.svg' alt='close'> </button>
+                      </div>
+                  </li>`;
+
+    tasksList.insertAdjacentHTML('beforeend', render);            
+}
 
 const edit = (edit) => {
     const parentNode = edit.closest('.task');
@@ -155,9 +156,12 @@ const updateStatus = (selectedTask) => {
     if(selectedTask.checked) {
         taskName.classList.add('checked');
         parentNode.classList.add('checkeds');
+        parentNode.classList.remove('pending')
     }else{
         taskName.classList.remove('checked');
         parentNode.classList.remove('checkeds');
+        parentNode.classList.add('pending')
+
     };
     const task = todoList.find((task) => task.id == taskName.id);
     task.checked = !task.checked
@@ -167,17 +171,28 @@ const updateStatus = (selectedTask) => {
 }
 
 renderFilterItems = (filter) => {
+    const render = tasksList.querySelectorAll('.task')
     if (filter =='all') {
         activeFilter = 'all'
-        renderTask(todoList);
+        render.forEach(elem => elem.classList.remove('none'))
     } else if (filter == 'completed') {
         activeFilter = 'completed'
         const completedTasks = todoList.filter(newTodo => newTodo.checked);
-        renderTask(completedTasks);
+        render.forEach((elem) => {
+            elem.classList.remove('none')
+            if (!elem.classList.contains('checkeds')) {
+                elem.classList.add('none')
+            }
+        })
     } else if(filter == 'pending') {
         activeFilter = 'pending'
         const pendingTasks = todoList.filter(newTodo => !newTodo.checked);
-        renderTask(pendingTasks);
+        render.forEach((elem) => {
+            elem.classList.remove('none')
+            if (!elem.classList.contains('pending')) {
+                elem.classList.add('none')
+            }
+        })
     }
 
 }
@@ -208,7 +223,8 @@ const seveTodoList = () => {
 };
 if(localStorage.getItem('todoList')) {
     todoList = JSON.parse(localStorage.getItem('todoList'));
-    renderTask(todoList);
+    todoList.forEach((task) => rendersItems(task))
+    showClearChecked();
     showPending();
     renderFilterItems(activeFilter)
     
