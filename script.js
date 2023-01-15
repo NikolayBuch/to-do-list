@@ -11,6 +11,7 @@ let todoList = [];
 let activeFilter = 'All'
 
 
+
 const addTask = (e) => {
     if (addMessege.value.trim() === '') return;
     let newTodo = {
@@ -172,34 +173,34 @@ const updateStatus = (selectedTask) => {
 
 renderFilterItems = (filter) => {
     const render = tasksList.querySelectorAll('.task')
-    if (filter =='all') {
+    let cucu = document.querySelector('wrapper')
+    if (filter === 'all') {
         activeFilter = 'all'
         render.forEach(elem => elem.classList.remove('none'))
-    } else if (filter == 'completed') {
+    } else if (filter === 'completed') {
         activeFilter = 'completed'
         render.forEach((elem) => {
             elem.classList.remove('none')
             if (!elem.classList.contains('checkeds')) {
-                elem.classList.add('none')
-            }
-        })
-    } else if(filter == 'pending') {
+                elem.classList.add('none')   
+            }})
+    } else if(filter === 'pending') {
         activeFilter = 'pending'
         render.forEach((elem) => {
             elem.classList.remove('none')
             if (!elem.classList.contains('pending')) {
                 elem.classList.add('none')
-            }
-        })
-    }
+            }})}}
 
-}
-
-filters.forEach((filter) => filter.addEventListener('click', () => {
-    document.querySelector("span.active").classList.remove("active");
-    filter.classList.add("active");
-    renderFilterItems(filter.id)}
-));
+filters.forEach((filter) => {
+        filter.addEventListener('click', () => {
+        document.querySelector("span.active").classList.remove("active");
+        filter.classList.add("active");
+        renderFilterItems(filter.id)
+        localStorage.setItem('filter', filter.id)
+        
+        }) 
+});
 
 tasksList.addEventListener('click', deleteTask)
 form.addEventListener('submit', (e) =>{
@@ -214,7 +215,6 @@ body.addEventListener('click', (e) => {
     addTask()
 });
 
-
 const seveTodoList = () => {
     localStorage.setItem('todoList', JSON.stringify(todoList))
     renderFilterItems(activeFilter);
@@ -228,6 +228,31 @@ if(localStorage.getItem('todoList')) {
     
 };
 
+if(localStorage.getItem('filter')) {
+    activeFilter = localStorage.getItem('filter')
+    document.querySelector('.active').classList.remove('active')
+    document.getElementById(activeFilter).classList.add('active')
+    const render = tasksList.querySelectorAll('.task')
+    
+    if (activeFilter === 'all') {
+        activeFilter = 'all'
+        render.forEach(elem => elem.classList.remove('none'))
+    } else if (activeFilter === 'pending') {
+        activeFilter = 'pending'
+        render.forEach((elem) => {
+            elem.classList.remove('none')
+            if (!elem.classList.contains('pending')) {
+                elem.classList.add('none')
+            }})
+        } else if (activeFilter === 'completed') {
+            activeFilter = 'completed'
+            render.forEach((elem) => {
+            elem.classList.remove('none')
+            if (!elem.classList.contains('checkeds')) {
+                elem.classList.add('none')   
+            }})
+        }
+}
 
 
 

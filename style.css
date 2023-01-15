@@ -153,6 +153,7 @@ body{
 .checked-all{
     border: none;
     background: none;
+    cursor: pointer;
 }
 .checked-all img{
     width: 20px;
@@ -164,11 +165,13 @@ body{
     border: 1px solid #000;
     background: #fff;
     color: #000;
+    cursor: pointer;
 }
 .add-btn:active{
     background: #000;
 }
 @media (min-width:1025px){
+    .checked-all
     .add-btn:hover {
         background: #000;
         color: #fff;
