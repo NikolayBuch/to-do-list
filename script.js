@@ -59,7 +59,7 @@ const edit = (edit) => {
     render.onblur = () => {
         edit.innerHTML = render.value
         taskText.text = render.value
-        if (render.value === ''){
+        if (render.value.trim() === ''){
             render.remove()
             parentNode.remove()
             const deleteId = todoList.splice(task, 1)  

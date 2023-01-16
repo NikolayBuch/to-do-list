@@ -169,6 +169,7 @@ body{
 }
 .add-btn:active{
     background: #000;
+    color: #fff;
 }
 @media (min-width:1025px){
     .checked-all
