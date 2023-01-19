@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Список дел, to do list">
-    <meta name="keywords" content="Список дел, to do list">
-    <title>ToDoList</title>
-    <link rel="icon" href="./img/icon.png">
-    <link href="style.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Список дел, to do list">
+	<meta name="keywords" content="Список дел, to do list">
+	<title>ToDoList</title>
+	<link rel="icon" href="./img/icon.png">
+	<link href="style.css" rel="stylesheet">
 </head>
+
 <body class="body">
-    <div class="abuot">
-        <h1 class="abuot-heading">To do list</h1>
-    </div>
-        <div class="container">
-            <form class="todo-list">
-                <div class="todo-list__container">
-                    <input type="text" placeholder="What needs to be done?" class="p-normal messege">
-                    <label class="label-messege">
-                        <span class="messege-text">What needs to be done?</span>
-                    </label>
-                </div>
-                <div class="todo-list__btm">
-                    <span class="checked-all"><img src="./img/chack.svg" alt=""></span>
-                    <button class="p-normal add-btn" type="submit">Add</button>
-                </div>
-            </form>
-            <div data-f="todo" class="wrapper">
-                <ul class="tasks-list" ></ul>
-            </div>
-        </div>
-        
-        
-        <div class="filters-blok">
-            <div class="pending"></div>
-            <div class="filters">
-                <span id="all" class="active" >All</span>
-                <span id="pending" >Pending</span>
-                <span id="completed" >Completed</span>
-            </div>
-            <button data-action="deleteChecked"class="tasks__clear p-normal none">Clear Completed</button>
-        </div>
-    </div>
-      
+	<div class="about">
+		<h1 class="about-heading">To do list</h1>
+	</div>
+	<div class="container">
+		<form class="todo-list">
+			<div class="todo-list__container">
+				<input type="text" placeholder="What needs to be done?" class="p-normal message">
+				<label class="label-message">
+					<span class="message-text">What needs to be done?</span>
+				</label>
+			</div>
+			<div class="todo-list__btm">
+				<button class="checked-all" type="button"><img src="./img/chack.svg" alt="checked-all"></button>
+				<button class="p-normal add-btn" type="submit">Add</button>
+			</div>
+		</form>
+		<div class="wrapper">
+			<ul class="tasks-list"></ul>
+		</div>
+	</div>
+
+
+	<div class="filters-blok">
+		<div class="pending"></div>
+		<div class="filters">
+			<button id="all" class="active p-normal">All</button>
+			<button id="pending" class="p-normal">Pending</button>
+			<button id="completed" class="p-normal">Completed</button>
+		</div>
+		<button onclick="deleteChecked(this)" class="tasks__clear p-normal hide">Clear Completed</button>
+	</div>
+	</div>
+	<div class="footer">
+		<p class="p-small footer-info">Created by <a class="footer-link" href="#">Nikolay Buch</a></p>
+		<p class="p-small footer-info">Created for <a class="footer-link" href="https://snp.agency/en">SnP</a></p>
+	</div>
 </body>
 <script src="./script.js"></script>
 <footer>
-    <p class="p-small ">Created by <a href="#">Nikolay Buch</a></p>
-    <p class="p-small ">Created for <a href="https://snp.agency/en" >SnP</a></p>
+
 </footer>
