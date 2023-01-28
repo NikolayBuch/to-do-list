@@ -193,7 +193,7 @@ body {
   margin: 20px 0;
 }
 
-.task__continer {
+.task__container {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -203,17 +203,16 @@ body {
 .custom-checkbox > input {
   position: absolute;
   opacity: 0;
-  width: 25px;
-  height: 25px;
-  z-index: 2;
+  z-index: -1;
   cursor: pointer;
 }
-.custom-checkbox > p {
+.custom-checkbox > span {
   display: inline-flex;
   align-items: flex-start;
   user-select: none;
+  opacity: 1;
 }
-.custom-checkbox > p:before {
+.custom-checkbox > span:before {
   content: "";
   display: inline-block;
   width: 23px;
@@ -226,12 +225,12 @@ body {
   background-position: center center;
   background-size: 70%;
 }
-.custom-checkbox > input:checked + p:before {
+.custom-checkbox > input:checked + span:before {
   border-color: #1b1f2b;
   background-image: url(./img/chack.svg);
   text-decoration: line-through;
 }
-.task__continer p {
+.task__container p {
   width: 500px;
   word-break: break-all;
 }
@@ -243,21 +242,21 @@ body {
   text-decoration: line-through;
 }
 @media (min-width: 1025px) {
-  .clouse-btn {
+  .close-btn {
     opacity: 0;
   }
-  .task:hover .clouse-btn {
+  .task:hover .close-btn {
     opacity: 1;
   }
 }
-.clouse-btn {
+.close-btn {
   width: 26px;
   height: 26px;
   border: none;
   background: none;
   cursor: pointer;
 }
-.clouse-btn img {
+.close-btn img {
   pointer-events: none;
 }
 .hide {
@@ -266,7 +265,7 @@ body {
 .edit {
   outline: none;
   width: 550px;
-  height: 40px;
+  height: 29px;
   background: #fff;
   border: none;
   border-bottom: 1px #000 solid;
@@ -274,10 +273,10 @@ body {
 }
 
 @media (max-width: 450px) {
-  .task__continer {
+  .task__container {
     width: 300px;
   }
-  .task__continer p {
+  .task__container p {
     width: 280px;
   }
   .edit {
