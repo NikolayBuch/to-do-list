@@ -10,9 +10,8 @@ const completedTask = document.querySelector("#completed");
 
 let todoList = [];
 let activeFilter = "All";
-let currChecked = true;
 
-const addTask = (e) => {
+const addTask = () => {
   if (message.value.trim() === "") return;
   let newTodo = {
     text: message.value.trim(),
@@ -32,9 +31,13 @@ const rendersItems = (item) => {
 				  <li id='${item.id}' class='task ' >
 					  <div class='task__container' >
 						  <label class='custom-checkbox'  >
-							  <input class='task__checked' onclick="updateStatus(this)" type='checkbox' id='${item.id}' ${item.checked ? "checked" : ""}><span></span>
+							  <input class='task__checked' onclick="updateStatus(this)" type='checkbox' id='${
+                  item.id
+                }' ${item.checked ? "checked" : ""}><span></span>
 							</label>
-						  <p ondblclick="editTask(this)" id=${item.id} class='p-normal text-task ${item.checked ? "checked " : ""}' >${item.text}</p>
+						  <p ondblclick="editTask(this)" id=${item.id} class='p-normal text-task ${
+    item.checked ? "checked " : ""
+  }' >${item.text}</p>
 						  <button onclick="deleteTask(this)" class='close-btn' ><img src='./img/close.svg' alt='close'> </button>
 					  </div>
 				  </li>`;
@@ -71,11 +74,10 @@ const editTask = (elem) => {
   const render = parentNode.querySelector(".edit");
   render.value = taskText.text;
   render.focus();
-  render.onblur = () => {
+  const editThisTask = () => {
     elem.innerHTML = render.value;
     taskText.text = render.value;
     if (render.value.trim() === "") {
-      render.remove();
       parentNode.remove();
       todoList.splice(task, 1);
     }
@@ -85,6 +87,7 @@ const editTask = (elem) => {
     showPending();
     saveTodoList();
   };
+  render.addEventListener("blur", editThisTask);
   render.addEventListener("keyup", (e) => {
     if (e.key === "Enter") {
       render.blur();
@@ -99,10 +102,8 @@ const editTask = (elem) => {
 };
 
 const checkedAllTodo = () => {
-  todoList.forEach((task) => {
-    task.checked = currChecked;
-  });
-  currChecked = !currChecked;
+  const isChecked = todoList.filter((elem) => !!elem.checked).length === todoList.length;
+  todoList.forEach((elem) => (elem.checked = !isChecked));
   showPending();
   showClearChecked();
   saveTodoList();
@@ -118,13 +119,11 @@ const deleteTask = (elem) => {
 };
 
 const deleteChecked = () => {
-  const taskChecked = tasksList.querySelectorAll(".checked");
-  for (let i = 0; i < taskChecked.length; i++) {
-    const index = Number(taskChecked[i].id);
-    todoList = todoList.filter((elem) => elem.id !== index);
-  }
+  const pendingTasks = todoList.filter((newTodo) => !newTodo.checked);
+  todoList = pendingTasks;
   saveTodoList();
   showClearChecked();
+  console.log(pendingTasks);
 };
 
 const showPending = () => {
@@ -179,7 +178,7 @@ body.addEventListener("click", (e) => {
   addTask();
 });
 
-const saveTodoList = (list) => {
+const saveTodoList = () => {
   localStorage.setItem("todoList", JSON.stringify(todoList));
   renderFilter(activeFilter);
 };
