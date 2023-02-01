@@ -18,12 +18,14 @@ const addTask = () => {
     checked: false,
     id: Date.now(),
   };
-  todoList.push(newTodo);
   rendersItems(newTodo);
+
+  todoList.push(newTodo);
   message.value = "";
   showClearChecked();
   saveTodoList();
   showPending();
+  renderFilter(activeFilter);
 };
 
 const rendersItems = (item) => {
@@ -59,6 +61,8 @@ const renderFilter = (filter) => {
       const pendingTasks = todoList.filter((newTodo) => !newTodo.checked);
       pendingTasks.forEach((elem) => rendersItems(elem));
       break;
+    default:
+      todoList.forEach((elem) => rendersItems(elem));
   }
 };
 
@@ -102,7 +106,8 @@ const editTask = (elem) => {
 };
 
 const checkedAllTodo = () => {
-  const isChecked = todoList.filter((elem) => !!elem.checked).length === todoList.length;
+  const isChecked =
+    todoList.filter((elem) => !!elem.checked).length === todoList.length;
   todoList.forEach((elem) => (elem.checked = !isChecked));
   showPending();
   showClearChecked();
@@ -123,7 +128,6 @@ const deleteChecked = () => {
   todoList = pendingTasks;
   saveTodoList();
   showClearChecked();
-  console.log(pendingTasks);
 };
 
 const showPending = () => {
@@ -166,7 +170,6 @@ const handleUpdateFilter = (e) => {
 allTask.addEventListener("click", handleUpdateFilter);
 pendingTask.addEventListener("click", handleUpdateFilter);
 completedTask.addEventListener("click", handleUpdateFilter);
-
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   addTask();
@@ -177,6 +180,7 @@ body.addEventListener("click", (e) => {
   if (e.target === message) return;
   addTask();
 });
+clearChecked.addEventListener("click", deleteChecked);
 
 const saveTodoList = () => {
   localStorage.setItem("todoList", JSON.stringify(todoList));
@@ -185,10 +189,11 @@ const saveTodoList = () => {
 if (localStorage.getItem("todoList")) {
   todoList = JSON.parse(localStorage.getItem("todoList"));
   todoList.forEach((task) => rendersItems(task));
-  activeFilter = localStorage.getItem("filter");
-  document.querySelector(".active").classList.remove("active");
-  document.getElementById(activeFilter).classList.add("active");
+  if (localStorage.getItem("filter")) {
+    activeFilter = localStorage.getItem("filter");
+    document.querySelector(".active").classList.remove("active");
+    document.getElementById(activeFilter).classList.add("active");
+  }
   showClearChecked();
   showPending();
-  renderFilter(activeFilter);
 }
